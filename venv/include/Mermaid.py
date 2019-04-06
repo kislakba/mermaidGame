@@ -14,18 +14,14 @@ class Mermaid():
         width = screen.get_width()
         height = screen.get_height()
         self.rectangle = pygame.rect.Rect(int(width/2), int(height/2), int(width / 5), int(height / 5))
-        self.flyImageOrder = 0
-        self.flyImages = [pygame.transform.scale(pygame.image.load("images/sb1.png"),
+        self.swimImageOrder = 0
+        self.swimImages = [pygame.transform.scale(pygame.image.load("images/sb1.png"),
+                                                  (self.rectangle[2], self.rectangle[3])),
+                           pygame.transform.scale(pygame.image.load("images/sb2.png"),
                                                  (self.rectangle[2], self.rectangle[3])),
-                          pygame.transform.scale(pygame.image.load("images/sb2.png"),
+                           pygame.transform.scale(pygame.image.load("images/sb4.png"),
                                                  (self.rectangle[2], self.rectangle[3])),
-                          pygame.transform.scale(pygame.image.load("images/sb3.png"),
-                                                 (self.rectangle[2], self.rectangle[3])),
-                          pygame.transform.scale(pygame.image.load("images/sb4.png"),
-                                                 (self.rectangle[2], self.rectangle[3])),
-                          pygame.transform.scale(pygame.image.load("images/sb5.png"),
-                                                 (self.rectangle[2], self.rectangle[3])),
-                          pygame.transform.scale(pygame.image.load("images/sb6.png"),
+                           pygame.transform.scale(pygame.image.load("images/sb5.png"),
                                                  (self.rectangle[2], self.rectangle[3]))]
         self.exposedImage = pygame.transform.scale(pygame.image.load("images/sbd.png"),
                                                    (self.rectangle[2], self.rectangle[3]))
@@ -40,8 +36,6 @@ class Mermaid():
             screen.blit(self.exposedImage, self.rectangle)
 
             return True
-        self.rectangle[0] = self.rectangle[0] + self.mx * 2
-        self.rectangle[1] = self.rectangle[1] + self.my * 2
         self.rectangle.clamp_ip(screen.get_rect())  # plane objesini ekran karesi içinde tutar
         if self.shootImageOrder == -1:
             self.flyImageOrder = (self.flyImageOrder + 1) % 2

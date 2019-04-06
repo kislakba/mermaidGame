@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="42b80280-9150-40f2-9dc6-20909c3f59e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/venv/include/Bullet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/Chapter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/JellyFish.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/LittleFish.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/Menu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/Mermaid.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/Oxygen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/Shark.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/include/pTimer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mermaidGame" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/include/Mermaid.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/include/Mermaid.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/include/Bullet.py">
           <provider selected="true" editor-type-id="text-editor" />
@@ -30,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/include/Mermaid.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="271">
+              <caret line="46" column="41" lean-forward="true" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -67,7 +58,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/include/pTimer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="741">
+            <state relative-caret-position="722">
               <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -145,6 +136,13 @@
               <item name="mermaidGame" type="462c0819:PsiDirectoryNode" />
               <item name="venv" type="462c0819:PsiDirectoryNode" />
               <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mermaidGame" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mermaidGame" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
               <item name="site" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -197,18 +195,27 @@
       <option name="presentableId" value="Default" />
       <updated>1554221964667</updated>
       <workItem from="1554221967895" duration="1270000" />
-      <workItem from="1554232703434" duration="2301000" />
+      <workItem from="1554232703434" duration="2525000" />
+      <workItem from="1554554674442" duration="830000" />
     </task>
+    <task id="LOCAL-00001" summary="I created the class that i will need. Timer pTimer class copied from class codes.">
+      <created>1554236739103</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1554236739103</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3571000" />
+    <option name="totallyTimeSpent" value="4625000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25133404" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25400212" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -234,6 +241,10 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="I created the class that i will need. Timer pTimer class copied from class codes." />
+    <option name="LAST_COMMIT_MESSAGE" value="I created the class that i will need. Timer pTimer class copied from class codes." />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/include/Bullet.py">
       <provider selected="true" editor-type-id="text-editor" />
@@ -255,7 +266,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/include/pTimer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
+        <state relative-caret-position="722">
           <caret line="39" selection-start-line="39" selection-end-line="39" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -268,8 +279,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/include/Mermaid.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="271">
+          <caret line="46" column="41" lean-forward="true" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
