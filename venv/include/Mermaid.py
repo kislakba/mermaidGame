@@ -9,8 +9,6 @@ class Mermaid():
     def __init__(self, screen):
         self.x = 0
         self.y = 0
-        self.mx = 0  # x haraket yönü
-        self.my = 0  # x haraket yönü
         width = screen.get_width()
         height = screen.get_height()
         self.rectangle = pygame.rect.Rect(int(width/2), int(height/2), int(width / 5), int(height / 5))
@@ -26,10 +24,6 @@ class Mermaid():
         self.exposedImage = pygame.transform.scale(pygame.image.load("images/sbd.png"),
                                                    (self.rectangle[2], self.rectangle[3]))
 
-        self.bullets = []
-        self.exposed = False
-        self.exposedEvent = pygame.event.Event(pygame.USEREVENT, attr1='planeExposedEvent')
-
     def draw(self, screen):
 
         if self.exposed:
@@ -43,7 +37,7 @@ class Mermaid():
         else:
             self.shootImageOrder = self.shootImageOrder + 1
             screen.blit(self.shootImages[self.shootImageOrder], self.rectangle)
-            if self.shootImageOrder == 4:
+            if self.swimImageOrder == 4:
                 self.shootImageOrder = -1
 
         for bullet in self.bullets:
@@ -68,4 +62,5 @@ class Mermaid():
 
     def expose(self):
         self.exposed = True
-
+    def noBreathe(self):
+        pass
