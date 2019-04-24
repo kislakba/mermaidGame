@@ -1,5 +1,7 @@
 #çizim ile işlemler yapabilsek dahi kontrol için objelere ihtiyacımız vardır.
 #bu noktada object merkezli programlama yapmamız gerekir.
+from builtins import print
+
 import pygame
 import sys
 import math
@@ -9,15 +11,11 @@ class Bullet():
         self.y=0
         self.mx=0 #x haraket yönü
         self.my=0 #x haraket yönü
-
         self.rectangle=pygame.rect.Rect(plane.rectange[0] + plane.rectange[2], plane.rectange[1] + int(plane.rectange[3] / 2), int(plane.rectange[2] / 5), int(plane.rectange[3] / 5))
         self.image=pygame.transform.scale(pygame.image.load("images/hook4x.png"),(self.rectangle[2],self.rectangle[3]))
     def draw(self,screen):
-        self.rectangle[0]=self.rectangle[0]+self.mx*3
-        self.rectangle[1]=self.rectangle[1]+self.my*3
-        #self.rectange.clamp_ip(screen.get_rect())
-        ##mermi objesini ekran karesi içinden çıkarsa silinir
-        ##bunu planeden kontrol edeceğiz.
+        self.rectangle[0]=self.rectangle[0]+self.mx
+        self.rectangle[1]=self.rectangle[1]+self.my
         screen.blit(self.image, self.rectangle)
 class Plane():
     def __init__(self,screen):
@@ -41,17 +39,20 @@ class Plane():
                 self.bullets.remove(bullet)
     def fire(self,mposition):
         nbullet=Bullet(self)
-        mx=float(mposition[0]-350)
-        my=float(mposition[1]-250)
-        nbullet.mx=float(mx/my)
-        nbullet.my=float(my/mx)
-        if my<0 and mx<0:
-            nbullet.my=nbullet.my * -1
-            nbullet.mx=nbullet.mx *-1
-        elif mx<0:
-            nbullet.my=nbullet.my*-1
-        elif my<0:
-            nbullet.mx=nbullet.my*-1
+        mx=float(mposition[0]-375)
+        my=float(mposition[1]-275)
+
+        nbullet.mx=float(math.cos(math.atan(mx/my))**2)*2
+        nbullet.my=float(math.sin(math.atan(mx/my))**2)*2
+        angle = math.atan2((nbullet.rectangle[1] + int(nbullet.rectangle[3] / 2) - mposition[1]),
+                           (mposition[0] - nbullet.rectangle[0]))
+        print(nbullet.mx)
+        print(nbullet.my)
+        nbullet.image = pygame.transform.rotate(nbullet.image, math.degrees(angle-math.radians(80)))
+        if mx<0:
+            nbullet.mx = nbullet.mx *-1
+        if my<0:
+            nbullet.my = nbullet.my *-1
 
         self.bullets.append(nbullet)
 pygame.init()
