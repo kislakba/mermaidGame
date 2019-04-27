@@ -3,62 +3,50 @@ import sys
 import math
 import random
 from Bullet import Bullet
-
-
 class Mermaid():
     def __init__(self, screen):
         self.x = 0
         self.y = 0
         width = screen.get_width()
         height = screen.get_height()
-        self.rectangle = pygame.rect.Rect(int(width/2), int(height/2), int(width / 5), int(height / 5))
-        self.swimImageOrder = 0
+        self.rectangle=[width/2-50,height/2-50,int(width/5),int(height/5)]
+        self.bullets = []
+        self.imageOrder = 0
         self.swimImages = [pygame.transform.scale(pygame.image.load("images/sb1.png"),
                                                   (self.rectangle[2], self.rectangle[3])),
                            pygame.transform.scale(pygame.image.load("images/sb2.png"),
                                                  (self.rectangle[2], self.rectangle[3])),
-                           pygame.transform.scale(pygame.image.load("images/sb4.png"),
+                           pygame.transform.scale(pygame.image.load("images/sb3.png"),
                                                  (self.rectangle[2], self.rectangle[3])),
-                           pygame.transform.scale(pygame.image.load("images/sb5.png"),
+                           pygame.transform.scale(pygame.image.load("images/sb4.png"),
                                                  (self.rectangle[2], self.rectangle[3]))]
         self.exposedImage = pygame.transform.scale(pygame.image.load("images/sbd.png"),
                                                    (self.rectangle[2], self.rectangle[3]))
 
-    def draw(self, screen):
-
-        if self.exposed:
-            screen.blit(self.exposedImage, self.rectangle)
-
-            return True
-        self.rectangle.clamp_ip(screen.get_rect())  # plane objesini ekran karesi içinde tutar
-        if self.shootImageOrder == -1:
-            self.flyImageOrder = (self.flyImageOrder + 1) % 2
-            screen.blit(self.flyImages[self.flyImageOrder], self.rectangle)
-        else:
-            self.shootImageOrder = self.shootImageOrder + 1
-            screen.blit(self.shootImages[self.shootImageOrder], self.rectangle)
-            if self.swimImageOrder == 4:
-                self.shootImageOrder = -1
-
+    def draw(self, screen, mposition):
+        self.imageOrder = self.imageOrder % 4 + 1
+        self.image = pygame.image.load("images/sb" + str(self.imageOrder) + ".png")
+        self.image = pygame.transform.scale(self.image, (self.rectangle[2], self.rectangle[3]))
+        angle = math.atan2((self.rectangle[1] + int(self.rectangle[3] / 2) - mposition[1]),
+                           (mposition[0] - self.rectangle[0]))
+        self.image = pygame.transform.rotate(self.image, math.degrees(angle))
+        screen.blit(self.image, self.rectangle)
         for bullet in self.bullets:
             bullet.draw(screen)
-            # rectangle sınıfının contains fonsiyonu dörtgenin diğerinin içinde olup olmadığı bilgisini döndürür.
-            # biz burada mermiler ekrandan çıkmışmı kontrolü yapacağız
-            # ekrandan çıkan mermiler mermi listesinden silinmeli, aksi taktirde binlerce mermi sonsuzluğa kadar gider bu da boşa kaynak sarfıdır.
             if not screen.get_rect().contains(bullet.rectangle):
-                self.bullets.remove(
-                    bullet)  # foreach döngülerinde bunu yapmak iyi bir yöntem değildir, çünkü dizin bozulur. Bir çok programlama dilinde hata alırsınız.
-                # ancak burada python kabul etti :D
+                self.bullets.remove(bullet)
 
-    def fire(self, screen):
-
+    def fire(self, mposition):
         nbullet = Bullet(self)
-        nbullet.mx = 1
+        mx = float(mposition[0] - 375)
+        my = float(mposition[1] - 275)
+        angle = math.atan2(my, mx)
+        nbullet.mx = float(math.cos(angle)) * 2
+        nbullet.my = float(math.sin(angle)) * 2
+        print(nbullet.mx)
+        print(nbullet.my)
+        nbullet.image = pygame.transform.rotate(nbullet.image, -math.degrees(angle))
         self.bullets.append(nbullet)
-        # her ateş edilişinde bir ateş edilme animasyonu devreye girmelidir
-        # bu işlem farklı yollarla yapılabilir
-        # burada yaprığımız normalde -1 olan shoot değerini 0  yapıyoruz ve nesnenin çizim fonksiyonunda bir if yapısıyla bu durumu kontrol ediyoruz.
-        self.shootImageOrder = 0
 
     def expose(self):
         self.exposed = True

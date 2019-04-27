@@ -5,12 +5,56 @@ from builtins import print
 import pygame
 import sys
 import math
+import random
+class TargetOne():
+    def __init__(self,screen):
+        self.x=0
+        self.y=0
+        self.mx=0 #x haraket yönü
+        self.my=0 #y haraket yönü
+        self.life=100
+        width=screen.get_width()
+        height=screen.get_height()
+        self.y=random.randint(10,height-int(height/5))
+        self.rectangle=pygame.rect.Rect(width+int(width/20)/2,self.y+int(height/10)/2,int(width/20),int(height/10))
+
+        self.flyImageOrder=0
+        self.flyImages=[]
+        for i in range(1,11):
+            self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Bombs/Bomb_1_Idle ("+str(i)+").png"),(self.rectangle[2],self.rectangle[3])))
+
+        self.explosionImageOrder=-1
+        self.explosionImages=[]
+        for i in range(1,10):
+            self.explosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Bombs/Bomb_1_Expo ("+str(i)+").png"),(self.rectangle[2]*4,self.rectangle[2]*4)))
+
+    def draw(self,screen):
+        if self.explosionImageOrder==-1:
+            self.flyImageOrder=(self.flyImageOrder+1)%10
+            self.rectangle[0]=self.rectangle[0]-self.mx*2
+            #self.rectangle[1]=self.rectangle[1]-self.my*2
+            #self.rectangle.centerx= self.rectangle.centerx-self.mx*2
+            screen.blit(self.flyImages[self.flyImageOrder], [self.rectangle[0]-int(self.flyImages[self.flyImageOrder].get_width()/2),self.rectangle[1]-int(self.flyImages[self.flyImageOrder].get_height()/2)])
+        else:
+            self.explosionImageOrder=(self.explosionImageOrder+1)%9
+            #self.rectangle[0]=self.rectangle[0]-self.mx*2
+            #self.rectangle[1]=self.rectangle[1]-self.my*2
+            self.rectangle.centerx= self.rectangle.centerx-self.mx*2
+
+            screen.blit(self.explosionImages[self.explosionImageOrder], [self.rectangle[0]-int(self.explosionImages[self.explosionImageOrder].get_width()/2),self.rectangle[1]-int(self.explosionImages[self.explosionImageOrder].get_height()/2)])
+            if self.explosionImageOrder==8:
+                self.explosionImageOrder=-1
+
+    def explosion(self):
+        if self.life<=0:
+            self.explosionImageOrder=0
+
 class Bullet():
     def __init__(self,plane):
         self.x=0
         self.y=0
-        self.mx=0 #x haraket yönü
-        self.my=0 #x haraket yönü
+        self.mx=0.0 #x haraket yönü
+        self.my=0.0 #y haraket yönü
         self.rectangle=pygame.rect.Rect(plane.rectange[0] + plane.rectange[2], plane.rectange[1] + int(plane.rectange[3] / 2), int(plane.rectange[2] / 5), int(plane.rectange[3] / 5))
         self.image=pygame.transform.scale(pygame.image.load("images/hook4x.png"),(self.rectangle[2],self.rectangle[3]))
     def draw(self,screen):
@@ -41,18 +85,14 @@ class Plane():
         nbullet=Bullet(self)
         mx=float(mposition[0]-375)
         my=float(mposition[1]-275)
+        angle =math.atan2(my,mx)
+        nbullet.mx=float(math.cos(angle))*2
+        nbullet.my=float(math.sin(angle))*2
 
-        nbullet.mx=float(math.cos(math.atan(mx/my))**2)*2
-        nbullet.my=float(math.sin(math.atan(mx/my))**2)*2
-        angle = math.atan2((nbullet.rectangle[1] + int(nbullet.rectangle[3] / 2) - mposition[1]),
-                           (mposition[0] - nbullet.rectangle[0]))
         print(nbullet.mx)
         print(nbullet.my)
-        nbullet.image = pygame.transform.rotate(nbullet.image, math.degrees(angle-math.radians(80)))
-        if mx<0:
-            nbullet.mx = nbullet.mx *-1
-        if my<0:
-            nbullet.my = nbullet.my *-1
+        nbullet.image = pygame.transform.rotate(nbullet.image, -math.degrees(angle))
+
 
         self.bullets.append(nbullet)
 pygame.init()
