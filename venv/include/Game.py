@@ -3,8 +3,9 @@ import sys
 import math
 import random
 from Chapter import ChapterOne
-gameDisplay_width=800
-gameDisplay_height=600
+pygame.init()
+gameDisplay_width=1000
+gameDisplay_height=750
 gameDisplay = pygame.display.set_mode((gameDisplay_width,gameDisplay_height))
 pygame.display.set_caption('Gamemaker')
 
@@ -24,10 +25,15 @@ while not crashed:
         if event.type == pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
             chapter.mermaid.fire(mouse_position)
-    gameDisplay.blit(backGroundImage,(0,0))
-    chapter.mermaid.draw(gameDisplay,mouse_position)
+
+        elif event == chapter.finishEvent:
+            print(event)
+            end=True
+
+    if not end:
+        chapter.draw(gameDisplay,mouse_position)
+
     pygame.display.update()
     clock.tick(60)
-
 pygame.quit()
 quit()

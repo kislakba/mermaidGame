@@ -22,6 +22,8 @@ class Mermaid():
                                                  (self.rectangle[2], self.rectangle[3]))]
         self.exposedImage = pygame.transform.scale(pygame.image.load("images/sbd.png"),
                                                    (self.rectangle[2], self.rectangle[3]))
+        self.exposed = False
+        self.exposedEvent = pygame.event.Event(pygame.USEREVENT, attr1='planeExposedEvent')
 
     def draw(self, screen, mposition):
         self.imageOrder = self.imageOrder % 4 + 1
