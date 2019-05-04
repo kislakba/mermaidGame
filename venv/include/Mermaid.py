@@ -7,11 +7,12 @@ class Mermaid():
     def __init__(self, screen):
         self.x = 0
         self.y = 0
-        width = screen.get_width()
-        height = screen.get_height()
-        self.rectangle=[width/2-50,height/2-50,int(width/5),int(height/5)]
+        self.width = screen.get_width()
+        self.height = screen.get_height()
+        self.rectangle=[self.width/2-50,self.height/2-50,int(self.width/5),int(self.height/5)]
         self.bullets = []
         self.imageOrder = 0
+        self.breath = 140
         self.swimImages = [pygame.transform.scale(pygame.image.load("images/sb1.png"),
                                                   (self.rectangle[2], self.rectangle[3])),
                            pygame.transform.scale(pygame.image.load("images/sb2.png"),
@@ -24,8 +25,13 @@ class Mermaid():
                                                    (self.rectangle[2], self.rectangle[3]))
         self.exposed = False
         self.exposedEvent = pygame.event.Event(pygame.USEREVENT, attr1='planeExposedEvent')
+    def decrease(self,screen):
+        self.breath -= 14
 
     def draw(self, screen, mposition):
+        if self.exposed:
+            screen.blit(self.exposedImage,self.rectangle)
+            return True
         self.imageOrder = self.imageOrder % 4 + 1
         self.image = pygame.image.load("images/sb" + str(self.imageOrder) + ".png")
         self.image = pygame.transform.scale(self.image, (self.rectangle[2], self.rectangle[3]))
@@ -40,11 +46,11 @@ class Mermaid():
 
     def fire(self, mposition):
         nbullet = Bullet(self)
-        mx = float(mposition[0] - 375)
-        my = float(mposition[1] - 275)
+        mx = float(mposition[0] - self.width/2)
+        my=float(mposition[1]-self.height/2)
         angle = math.atan2(my, mx)
-        nbullet.mx = float(math.cos(angle)) * 2
-        nbullet.my = float(math.sin(angle)) * 2
+        nbullet.mx = float(math.cos(angle)) * 10
+        nbullet.my = float(math.sin(angle)) * 10
         print(nbullet.mx)
         print(nbullet.my)
         nbullet.image = pygame.transform.rotate(nbullet.image, -math.degrees(angle))

@@ -9,6 +9,7 @@ class LittleFish():
         self.mx = 1  # x haraket yönü
         self.my = 0  # y haraket yönü
         self.life = 50
+        self.screen = screen
         width = screen.get_width()
         height = screen.get_height()
         self.y = random.randint(10, height - int(height / 5))
