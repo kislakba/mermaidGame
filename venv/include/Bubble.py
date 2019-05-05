@@ -2,12 +2,13 @@ import pygame
 import sys
 import random
 class Bubble():
+    ExposedEvent = pygame.event.Event(pygame.USEREVENT, attr1='itsNotimportantTarget')
     def __init__(self, screen, count=0):
         self.x = 0
         self.count = count
         self.y = 0
-        self.mx = 0  # x haraket yönü
-        self.my = 1  # y haraket yönü
+        self.mx = 0
+        self.my = 1
         self.life = 50
         width = screen.get_width()
         height = screen.get_height()

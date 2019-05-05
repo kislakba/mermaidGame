@@ -2,12 +2,13 @@ import pygame
 import sys
 import random
 class Shark():
+    ExposedEvent = pygame.event.Event(pygame.USEREVENT, attr1='SharkExposed')
     def __init__(self, screen, count):
         self.x = 0
         self.count = count
         self.y = 0
-        self.mx = 1  # x haraket yönü
-        self.my = 0  # y haraket yönü
+        self.mx = 1
+        self.my = 0
         self.life = 150
         width = screen.get_width()
         height = screen.get_height()
@@ -32,8 +33,6 @@ class Shark():
         if self.exposed == False:
             self.flyImageOrder = (self.flyImageOrder + 1) % 5
             self.rectangle[0] = self.rectangle[0] - self.mx * 2
-            # self.rectangle[1]=self.rectangle[1]-self.my*2
-            # self.rectangle.centerx= self.rectangle.centerx-self.mx*2
             screen.blit(self.flyImages[self.flyImageOrder],
                         [self.rectangle[0] - int(self.flyImages[self.flyImageOrder].get_width() / 2),
                          self.rectangle[1] - int(self.flyImages[self.flyImageOrder].get_height() / 2)])
@@ -45,8 +44,6 @@ class Shark():
         if self.exposed == False:
             self.flyImageOrder = (self.flyImageOrder + 1) % 5
             self.rectangle[0] = self.rectangle[0] + self.mx * 2
-            # self.rectangle[1]=self.rectangle[1]-self.my*2
-            # self.rectangle.centerx= self.rectangle.centerx-self.mx*2
             screen.blit(self.flyImagesLeft[self.flyImageOrder],
                         [self.rectangle[0] - int(self.flyImagesLeft[self.flyImageOrder].get_width() / 2),
                          self.rectangle[1] - int(self.flyImagesLeft[self.flyImageOrder].get_height() / 2)])
@@ -55,7 +52,6 @@ class Shark():
     def hit(self):
         self.life = self.life - 50
         if self.life <= 0:
-            print("ölllll")
             self.expose()
 
     def expose(self):

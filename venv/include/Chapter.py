@@ -17,10 +17,16 @@ health_msg = health_font.render("Hp:", 1, pygame.Color("Purple"))
 health_msg_size = health_font.size("Hp")
 score_font = pygame.font.Font(None, 38)
 score_numb_font = pygame.font.Font(None, 28)
+score_msg = health_font.render("Score:", 1, pygame.Color("orange"))
+score_msg_size = health_font.size("Score")
+time_font = pygame.font.Font(None, 38)
+time_numb_font = pygame.font.Font(None, 28)
 game_over_font = pygame.font.Font(None, 46)
-play_again_font = score_numb_font
-score_msg = score_font.render("Time:", 1, pygame.Color("white"))
-score_msg_size = score_font.size("Time")
+game_over_msg = game_over_font.render("Game Over", 1, pygame.Color("white"))
+won_font = pygame.font.Font(None, 46)
+won_msg = won_font.render("YOU WON!!!", 1, pygame.Color("white"))
+time_msg = time_font.render("Time:", 1, pygame.Color("white"))
+time_msg_size = time_font.size("Time")
 class ChapterOne():
     def __init__(self, screen):
         self.name = "Let's Start"
@@ -37,7 +43,7 @@ class ChapterOne():
         self.pgenerateTargetTimer3 = pTimer(3, self.generateLittle, screen)
         self.decreasingTimer = pTimer(3,self.mermaid.decrease,screen)
         self.finishEvent = pygame.event.Event(pygame.USEREVENT, attr1='finishEvent')
-        self.generateBubbleTimer = pTimer(3,self.generateBubble,screen) #ben vurunca bubble expose olunca hp yükseltilecek.
+        self.generateBubbleTimer = pTimer(2,self.generateBubble,screen)
     def start(self, screen):
         self.pgenerateTargetTimer.start()
         self.pgenerateTargetTimer2.start()
@@ -65,9 +71,13 @@ class ChapterOne():
         newTarget = JellyFish(arguments[0],self.place)
         self.targets.append(newTarget)
     def drawHp(self,screen,hp):
-        score_numb = health_numb_font.render(str(hp), 1, pygame.Color("red"))
+        health_numb = health_numb_font.render(str(hp), 1, pygame.Color("red"))
         screen.blit(health_msg, (screen.get_width() - health_msg_size[0] - 60, 10))
-        screen.blit(score_numb, (screen.get_width() - 45, 14))
+        screen.blit(health_numb, (screen.get_width() - 45, 14))
+    def drawScore(self,screen,score):
+        score_numb = score_numb_font.render(str(score), 1, pygame.Color("orange"))
+        screen.blit(score_msg, ((screen.get_width()/2) - score_msg_size[0] , 10))
+        screen.blit(score_numb, ((screen.get_width()/2) +14, 14))
 
     def drawBackGround(self, screen):
         screen.blit(self.backGroundImage, (self.backGroundImageX, 0))
@@ -77,12 +87,16 @@ class ChapterOne():
             self.backGroundImageX = 0
 
     def drawGameTime(self,screen,gameTime):
-        game_time = score_font.render("Time:", 1, pygame.Color("red"))
-        game_time_numb = score_numb_font.render(str(gameTime / 1000), 1, pygame.Color("green"))
+        game_time = time_font.render("Time:", 1, pygame.Color("red"))
+        game_time_numb = time_numb_font.render(str(gameTime / 1000), 1, pygame.Color("green"))
         screen.blit(game_time, (30, 10))
         screen.blit(game_time_numb, (105, 14))
 
     def drawMermaid(self, screen, mposition):
+        if self.mermaid.breath <= 0:
+            pygame.event.post(self.mermaid.exposedEvent)
+            self.mermaid.draw(screen, mposition)
+            self.finish(screen)
         self.mermaid.draw(screen, mposition)
 
     def drawTargets(self, screen):
@@ -90,16 +104,17 @@ class ChapterOne():
             if target.count %2 ==0:
                 exposed = target.drawRight(screen)
                 if type(target)==Bubble:
-                    print("balon")
-                self.place=self.place+1
+                    self.place=self.place+1
             if target.count %2 ==1:
                 exposed = target.drawLeft(screen)
                 self.place = self.place + 1
+
             if exposed:
                 if type(target) == Bubble:
                     self.mermaid.breath += 10
 
                 self.targets.remove(target)
+                pygame.event.post(target.ExposedEvent)
                 if self.mermaid.exposed:
                     pygame.event.post(self.mermaid.exposedEvent)
                     self.finish(screen)
@@ -112,12 +127,9 @@ class ChapterOne():
 
                 else:
                     for bullet in self.mermaid.bullets:
-                        # eğer eşleşme varsa
                         if target.rectangle.colliderect(bullet.rectangle):
                             print("hithit")
-                            # target hit almış demektir.
                             target.hit()
-                            # mermi kaybolmalı
                             self.mermaid.bullets.remove(bullet)
 
     def draw(self, screen, mposition, gt):
@@ -125,4 +137,5 @@ class ChapterOne():
         self.drawMermaid(screen, mposition)
         self.drawTargets(screen)
         self.drawHp(screen, self.mermaid.breath)
+        self.drawScore(screen,self.mermaid.score)
         self.drawGameTime(screen, gt)

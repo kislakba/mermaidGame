@@ -7,12 +7,13 @@ class Mermaid():
     def __init__(self, screen):
         self.x = 0
         self.y = 0
+        self.score=0
         self.width = screen.get_width()
         self.height = screen.get_height()
         self.rectangle=[self.width/2-50,self.height/2-50,int(self.width/5),int(self.height/5)]
         self.bullets = []
         self.imageOrder = 0
-        self.breath = 140
+        self.breath = 100
         self.swimImages = [pygame.transform.scale(pygame.image.load("images/sb1.png"),
                                                   (self.rectangle[2], self.rectangle[3])),
                            pygame.transform.scale(pygame.image.load("images/sb2.png"),
@@ -27,6 +28,8 @@ class Mermaid():
         self.exposedEvent = pygame.event.Event(pygame.USEREVENT, attr1='planeExposedEvent')
     def decrease(self,screen):
         self.breath -= 14
+        if self.breath<=0:
+            self.expose()
 
     def draw(self, screen, mposition):
         if self.exposed:
@@ -58,5 +61,3 @@ class Mermaid():
 
     def expose(self):
         self.exposed = True
-    def noBreathe(self):
-        pass
